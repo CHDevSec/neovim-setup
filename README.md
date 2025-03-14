@@ -1,116 +1,108 @@
-# 🚀 Neovim Setup - Configuração Profissional do Neovim 
+# 🚀 Neovim Setup - Professional Neovim Configuration 
 
 ![Neovim](https://img.shields.io/badge/Neovim-Setup-blue?style=for-the-badge&logo=neovim)
 ![Shell](https://img.shields.io/badge/Shell-Bash-green?style=for-the-badge&logo=gnu-bash)
 ![License](https://img.shields.io/github/license/Posedequebradaaa/neovim-setup?style=for-the-badge)
 
-## 📌 Sobre
-Esta é uma **configuração poderosa e otimizada do Neovim**, pronta para ser usada como IDE para desenvolvimento. Com suporte a LSP, plugins essenciais e um tema bonito, esse setup melhora **velocidade, produtividade e organização**.
+## 📌 About
+This is a **powerful and optimized Neovim configuration**, designed to be used as a development IDE. With **LSP support, essential plugins, and a beautiful theme**, this setup improves **speed, productivity, and organization**.
 
 > 🕒 **Startup time:** 44.1ms 🚀
 
-Se você já tem sua própria configuração personalizada do Neovim, pode **fazer backup automático** antes de aplicar este setup.
+If you already have a custom Neovim setup, you can **automatically back up your existing configuration** before applying this setup.
 
-## 🖥️ Preview do Neovim
+## 🖥️ Neovim Preview
 ![Neovim Preview](https://github.com/Posedequebradaaa/neovim-setup/raw/main/neovim.gif)
 
-## 🎮 Atalhos de Teclado (Keymaps)
+## 🎮 Keymaps
 
-Aqui estão alguns atalhos úteis configurados nesta versão do Neovim:
+Here are some useful keymaps included in this Neovim setup:
 
-### 📁 **Manipulação de Arquivos**
-| Atalho         | Ação                 |
-|---------------|---------------------|
-| `<leader>w`   | Salvar arquivo |
-| `<leader>q`   | Fechar Neovim |
+### 📁 **File Management**
+| Keymap        | Action |
+|--------------|--------|
+| `<leader>w`  | Save file |
+| `<leader>q`  | Quit Neovim |
 
-### 🖥️ **Janela e Navegação**
-| Atalho        | Ação |
-|--------------|------|
-| `<leader>sh` | Dividir janela **horizontalmente** |
-| `<leader>sv` | Dividir janela **verticalmente** |
-| `<C-k>` | Mover para **cima** |
-| `<C-j>` | Mover para **baixo** |
-| `<C-h>` | Mover para **esquerda** |
-| `<C-l>` | Mover para **direita** |
-| `<leader>th` | Alterar layout para **horizontal** |
-| `<leader>tk` | Alterar layout para **vertical** |
+### 🖥️ **Window Management & Navigation**
+| Keymap       | Action |
+|-------------|--------|
+| `<leader>sh` | Split window **horizontally** |
+| `<leader>sv` | Split window **vertically** |
+| `<C-k>` | Move **up** |
+| `<C-j>` | Move **down** |
+| `<C-h>` | Move **left** |
+| `<C-l>` | Move **right** |
+| `<leader>th` | Change window layout to **horizontal** |
+| `<leader>tk` | Change window layout to **vertical** |
 
-### 📌 **Edição e Seleção**
-| Atalho       | Ação |
-|-------------|------|
-| `J` (Visual) | Mover linha **para baixo** |
-| `K` (Visual) | Mover linha **para cima** |
-| `<C-a>` | Selecionar **tudo** |
-| `<leader>co` | Ativar/Desativar **comentário** |
+### 📌 **Editing & Selection**
+| Keymap       | Action |
+|-------------|--------|
+| `J` (Visual) | Move selected line **down** |
+| `K` (Visual) | Move selected line **up** |
+| `<C-a>` | Select **all** |
+| `<leader>co` | Toggle **comment** |
 
-### 🔍 **Busca e Arquivos (Telescope)**
-| Atalho       | Ação |
-|-------------|------|
-| `<leader>ff` | Buscar arquivos |
-| `<leader>fg` | Buscar texto |
-| `<leader>fr` | Abrir arquivos recentes |
-| `<leader>fb` | Abrir buffers ativos |
+### 🔍 **Search & Files (Telescope)**
+| Keymap       | Action |
+|-------------|--------|
+| `<leader>ff` | Find files |
+| `<leader>fg` | Live grep search |
+| `<leader>fr` | Open recent files |
+| `<leader>fb` | Open buffers |
 
-### 🔀 **Tabs e Buffers**
-| Atalho       | Ação |
-|-------------|------|
-| `<Tab>` | Ir para **próxima aba** |
-| `<S-Tab>` | Ir para **aba anterior** |
-| `<leader>x` | Fechar buffer |
-| `<A-p>` | Fixar buffer |
+### 🔀 **Tabs & Buffers**
+| Keymap       | Action |
+|-------------|--------|
+| `<Tab>` | Go to **next tab** |
+| `<S-Tab>` | Go to **previous tab** |
+| `<leader>x` | Close buffer |
+| `<A-p>` | Pin buffer |
 
-### 📂 **Navegação de Arquivos (NeoTree)**
-| Atalho       | Ação |
-|-------------|------|
-| `<leader>b` | Alternar NeoTree |
-| `<leader>nb` | Revelar buffer atual no NeoTree |
+### 📂 **File Explorer (NeoTree)**
+| Keymap       | Action |
+|-------------|--------|
+| `<leader>b` | Toggle NeoTree |
+| `<leader>nb` | Reveal buffer in NeoTree |
 
-### 🔥 **Busca Avançada (Spectre)**
-| Atalho       | Ação |
-|-------------|------|
-| `<leader>S` | Alternar Spectre |
-| `<leader>sw` | Buscar palavra selecionada |
-| `<leader>sp` | Buscar dentro do arquivo atual |
+### 🔥 **Advanced Search (Spectre)**
+| Keymap       | Action |
+|-------------|--------|
+| `<leader>S` | Toggle Spectre |
+| `<leader>sw` | Search for the selected word |
+| `<leader>sp` | Search in the current file |
 
 ---
-## 🎯 **Plugins Incluídos**
-Este setup já vem com os seguintes plugins configurados:
 
-✅ **Interface e Navegação**  
-- **Alpha** - Tela inicial personalizada  
-- **Barbar** - Melhor gerenciamento de abas  
-- **Lualine** - Status bar estilizada  
-- **Neotree** - Explorador de arquivos avançado  
+## 🎯 **Included Plugins**
+This setup comes pre-configured with the following plugins:
 
-✅ **Produtividade e Utilitários**  
-- **Autopairs** - Completa automaticamente parênteses e aspas  
-- **Comments** - Atalhos fáceis para comentar código  
-- **Spectre** - Ferramenta avançada de busca e substituição  
-- **Which-Key** - Exibe atalhos disponíveis para comandos  
+✅ **Interface & Navigation**  
+`Alpha`, `Barbar`, `Lualine`, `NeoTree`
 
-✅ **LSP e Autocompletar**  
-- **LSP Config** - Integração com servidores de linguagem  
-- **Completions** - Suporte a snippets e sugestões  
-- **Conform** - Formatação automática de código  
+✅ **Productivity & Utilities**  
+`Autopairs`, `Comments`, `Spectre`, `Which-Key`
 
-✅ **Aparência e Temas**  
-- **Highlight-Colors** - Destaca cores no código  
-- **Indent-Blankline** - Exibe guias de indentação  
-- **Tokyo-Night Theme** - Tema visual moderno e clean  
+✅ **LSP & Autocompletion**  
+`LSP Config`, `Completions`, `Conform`
 
-✅ **Desenvolvimento**  
-- **Telescope** - Pesquisa instantânea no projeto  
-- **Treesitter** - Melhor realce de sintaxe  
+✅ **Appearance & Themes**  
+`Highlight-Colors`, `Indent-Blankline`, `Tokyo-Night`
 
-## 🛠️ **Pré-requisitos**
-Antes de instalar, certifique-se de ter:
-- **Sistema baseado em Debian (Ubuntu, Pop!_OS, etc.)**
-- **Git instalado** (`sudo apt install git`)
-- **Conexão com a internet**
+✅ **Development**  
+`Telescope`, `Treesitter`
 
-## 📥 **Instalação**
-Para instalar o Neovim com esta configuração, execute os seguintes comandos:
+---
+
+## 🛠️ **Requirements**
+Before installing, make sure you have:
+- **A Debian-based system (Ubuntu, Pop!_OS, etc.)**
+- **Git installed** (`sudo apt install git`)
+- **Internet connection**
+
+## 📥 **Installation**
+To install Neovim with this configuration, run the following commands:
 
 ```bash
 git clone https://github.com/Posedequebradaaa/neovim-setup.git
