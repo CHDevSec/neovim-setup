@@ -74,18 +74,6 @@ Aqui estão alguns atalhos úteis configurados nesta versão do Neovim:
 | `<leader>sp` | Buscar dentro do arquivo atual |
 
 ---
-
-## **🚀 Próximos Passos**
-1️⃣ **Adiciona essa seção no `README.md`** no local que fizer mais sentido.  
-2️⃣ **Salva e sobe para o GitHub** com:
-
-```bash
-git add README.md
-git commit -m "Adicionada seção de atalhos do Neovim"
-git push origin main
-
-
-
 ## 🎯 **Plugins Incluídos**
 Este setup já vem com os seguintes plugins configurados:
 
