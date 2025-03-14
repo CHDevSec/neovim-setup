@@ -103,7 +103,7 @@ This setup comes pre-configured with the following plugins:
 This Neovim setup is based on the **dotfiles** by **Ghosts** (https://github.com/gh0stzk/dotfiles).  
 Thank you for sharing your amazing configurations! 💻🔥
 
--- 
+---
 
 ## 🛠️ **Requirements**
 Before installing, make sure you have:
