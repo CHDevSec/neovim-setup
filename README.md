@@ -14,6 +14,78 @@ Se você já tem sua própria configuração personalizada do Neovim, pode **faz
 ## 🖥️ Preview do Neovim
 ![Neovim Preview](https://github.com/Posedequebradaaa/neovim-setup/raw/main/neovim.gif)
 
+## 🎮 Atalhos de Teclado (Keymaps)
+
+Aqui estão alguns atalhos úteis configurados nesta versão do Neovim:
+
+### 📁 **Manipulação de Arquivos**
+| Atalho         | Ação                 |
+|---------------|---------------------|
+| `<leader>w`   | Salvar arquivo |
+| `<leader>q`   | Fechar Neovim |
+
+### 🖥️ **Janela e Navegação**
+| Atalho        | Ação |
+|--------------|------|
+| `<leader>sh` | Dividir janela **horizontalmente** |
+| `<leader>sv` | Dividir janela **verticalmente** |
+| `<C-k>` | Mover para **cima** |
+| `<C-j>` | Mover para **baixo** |
+| `<C-h>` | Mover para **esquerda** |
+| `<C-l>` | Mover para **direita** |
+| `<leader>th` | Alterar layout para **horizontal** |
+| `<leader>tk` | Alterar layout para **vertical** |
+
+### 📌 **Edição e Seleção**
+| Atalho       | Ação |
+|-------------|------|
+| `J` (Visual) | Mover linha **para baixo** |
+| `K` (Visual) | Mover linha **para cima** |
+| `<C-a>` | Selecionar **tudo** |
+| `<leader>co` | Ativar/Desativar **comentário** |
+
+### 🔍 **Busca e Arquivos (Telescope)**
+| Atalho       | Ação |
+|-------------|------|
+| `<leader>ff` | Buscar arquivos |
+| `<leader>fg` | Buscar texto |
+| `<leader>fr` | Abrir arquivos recentes |
+| `<leader>fb` | Abrir buffers ativos |
+
+### 🔀 **Tabs e Buffers**
+| Atalho       | Ação |
+|-------------|------|
+| `<Tab>` | Ir para **próxima aba** |
+| `<S-Tab>` | Ir para **aba anterior** |
+| `<leader>x` | Fechar buffer |
+| `<A-p>` | Fixar buffer |
+
+### 📂 **Navegação de Arquivos (NeoTree)**
+| Atalho       | Ação |
+|-------------|------|
+| `<leader>b` | Alternar NeoTree |
+| `<leader>nb` | Revelar buffer atual no NeoTree |
+
+### 🔥 **Busca Avançada (Spectre)**
+| Atalho       | Ação |
+|-------------|------|
+| `<leader>S` | Alternar Spectre |
+| `<leader>sw` | Buscar palavra selecionada |
+| `<leader>sp` | Buscar dentro do arquivo atual |
+
+---
+
+## **🚀 Próximos Passos**
+1️⃣ **Adiciona essa seção no `README.md`** no local que fizer mais sentido.  
+2️⃣ **Salva e sobe para o GitHub** com:
+
+```bash
+git add README.md
+git commit -m "Adicionada seção de atalhos do Neovim"
+git push origin main
+
+
+
 ## 🎯 **Plugins Incluídos**
 Este setup já vem com os seguintes plugins configurados:
 
