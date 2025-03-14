@@ -9,7 +9,9 @@ Esta é uma **configuração poderosa e otimizada do Neovim**, pronta para ser u
 
 > 🕒 **Startup time:** 44.1ms 🚀
 
-Se você já tem sua própria configuração personalizada do Neovim, pode **fazer backup automático** antes de aplicar este setup.  
+Se você já tem sua própria configuração personalizada do Neovim, pode **fazer backup automático** antes de aplicar este setup. 
+
+https://private-user-images.githubusercontent.com/167234050/422842345-44fc253b-9b3d-4638-9b8c-8c6168fc6bc7.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDE5NjQ4NzgsIm5iZiI6MTc0MTk2NDU3OCwicGF0aCI6Ii8xNjcyMzQwNTAvNDIyODQyMzQ1LTQ0ZmMyNTNiLTliM2QtNDYzOC05YjhjLThjNjE2OGZjNmJjNy5naWY_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxNFQxNTAyNThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT00ZjU2MGFhYmNiNmY2Y2UwMGYzN2M4Njg2MjViODlhMzRiN2E2NjZhOTcxZTU5NzMwOWNhYmNhZDgyODFjYjE0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.hKbyOQnloLvtS-Y8CGN4GQDmoWKzdX-97ruOt-rChmE
 
 ## 🎯 **Plugins Incluídos**
 Este setup já vem com os seguintes plugins configurados:
