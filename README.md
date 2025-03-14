@@ -9,7 +9,9 @@ Esta é uma **configuração poderosa e otimizada do Neovim**, pronta para ser u
 
 > 🕒 **Startup time:** 44.1ms 🚀
 
-Se você já tem sua própria configuração personalizada do Neovim, pode **fazer backup automático** antes de aplicar este setup. 
+Se você já tem sua própria configuração personalizada do Neovim, pode **fazer backup automático** antes de aplicar este setup.
+
+https://github.com/Posedequebradaaa/neovim-setup/issues/1#issue-2920482512
 
 ## 🎯 **Plugins Incluídos**
 Este setup já vem com os seguintes plugins configurados:
