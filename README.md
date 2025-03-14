@@ -4,6 +4,10 @@
 ![Shell](https://img.shields.io/badge/Shell-Bash-green?style=for-the-badge&logo=gnu-bash)
 ![License](https://img.shields.io/github/license/Posedequebradaaa/neovim-setup?style=for-the-badge)
 
+## ⚡ Quick Actions
+[![Install Neovim](https://img.shields.io/badge/Install%20Neovim-%E2%AC%85-blue?style=for-the-badge)](#-installation)  
+[![View Keymaps](https://img.shields.io/badge/View%20Keymaps-%F0%9F%94%8D-yellow?style=for-the-badge)](#-keymaps)
+
 ## 📌 About
 This is a **powerful and optimized Neovim configuration**, designed to be used as a development IDE. With **LSP support, essential plugins, and a beautiful theme**, this setup improves **speed, productivity, and organization**.
 
