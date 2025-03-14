@@ -1,4 +1,4 @@
-# 🚀 Neovim Setup - Professional Neovim Configuration 
+# 🚀 Neovim Setup - Professional Neovim Configuration
 
 ![Neovim](https://img.shields.io/badge/Neovim-Setup-blue?style=for-the-badge&logo=neovim)
 ![Shell](https://img.shields.io/badge/Shell-Bash-green?style=for-the-badge&logo=gnu-bash)
