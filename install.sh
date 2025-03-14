@@ -19,9 +19,13 @@ log_error() {
     echo "[ERROR] $1" | tee -a "$ERROR_LOG"
 }
 
-# Display ASCII art welcome message
+# Exibir arte ASCII de boas-vindas
 welcome_message() {
     echo -e "${CGR}"
+    echo "======================================"
+    echo "  🚀 Bem-vindo ao Setup do Neovim!  "
+    echo "======================================"
+    echo -e "${CNC}"
     echo " $$\   $$\                               $$\               "
     echo " $$$\  $$ |                              \__|              "
     echo " $$$$\ $$ | $$$$$$\   $$$$$$\ $$\    $$\ $$\ $$$$$$\$$$$\  "
@@ -32,6 +36,7 @@ welcome_message() {
     echo " \__|  \__| \_______| \______/    \_/    \__|\__| \__| \__|"
     echo -e "${CNC}"
 }
+
 
 # Ask for confirmation before installing
 confirm_installation() {
