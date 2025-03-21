@@ -11,7 +11,7 @@ CNC=$(tput sgr0)     # Reset colors
 # Important paths
 backup_folder="$HOME/.config/nvim_backup"
 ERROR_LOG="$HOME/NeovimInstall.log"
-repo_url="https://github.com/Posedequebradaaa/neovim-setup.git"
+repo_url="https://github.com/CHDevSec/neovim-setup.git"
 temp_dir="$HOME/dotfiles_temp"
 
 # Function for error logging
@@ -22,9 +22,15 @@ log_error() {
 # Exibir arte ASCII de boas-vindas
 welcome_message() {
     echo -e "${CGR}"
-    echo "======================================"
+    echo " __   __  _______   ______   ____    ____  __  .___  ___. "
+    echo "|  \ |  | |   ____| /  __  \  \   \  /   / |  | |   \/   | "
+    echo "|   \|  | |  |__   |  |  |  |  \   \/   /  |  | |  \  /  | "
+    echo "|  . `  | |   __|  |  |  |  |   \      /   |  | |  |\/|  | "
+    echo "|  |\   | |  |____ |  `--'  |    \    /    |  | |  |  |  | "
+    echo "|__| \__| |_______| \______/      \__/     |__| |__|  |__| "
+    echo "========================================================="
     echo "  🚀 Bem-vindo ao Setup do Neovim!  "
-    echo "======================================"
+    echo "========================================================="
     echo -e "${CNC}"
 }
 
@@ -47,7 +53,7 @@ install_neovim() {
     echo -e "${CYE}Installing Neovim and dependencies...${CNC}"
     
     sudo apt update -y
-    sudo apt install -y neovim git curl ripgrep fd-find
+    sudo apt install -y neovim git curl ripgrep fd-find unzip
 
     if ! command -v nvim &> /dev/null; then
         log_error "Failed to install Neovim!"
@@ -55,6 +61,24 @@ install_neovim() {
     fi
 
     echo -e "${CGR}Neovim successfully installed!${CNC}"
+}
+
+# Install Nerd Fonts
+install_nerd_fonts() {
+    echo -e "${CYE}Installing Nerd Fonts...${CNC}"
+    mkdir -p "$HOME/.local/share/fonts"
+    wget -q --show-progress -P "$HOME/.local/share/fonts" "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+    unzip -o "$HOME/.local/share/fonts/JetBrainsMono.zip" -d "$HOME/.local/share/fonts/"
+    fc-cache -fv
+    echo -e "${CGR}Nerd Font installed successfully!${CNC}"
+}
+
+# Configure terminal fonts
+configure_terminal_fonts() {
+    echo -e "${CYE}Configuring terminal fonts...${CNC}"
+    mkdir -p "$HOME/.config/kitty" "$HOME/.config/alacritty"
+    echo "font_family JetBrainsMono Nerd Font" > "$HOME/.config/kitty/kitty.conf"
+    echo -e "[font]\nnormal = { family = \"JetBrainsMono Nerd Font\" }" > "$HOME/.config/alacritty/alacritty.yml"
 }
 
 # Backup existing Neovim configuration
@@ -69,12 +93,10 @@ backup_existing_config() {
 # Clone the custom Neovim configuration
 clone_neovim_config() {
     echo -e "${CYE}Downloading Neovim configuration from repository...${CNC}"
-
     git clone --depth=1 "$repo_url" "$temp_dir" || {
         log_error "Failed to clone repository files!"
         exit 1
     }
-
     if [ -d "$temp_dir" ]; then
         mv "$temp_dir" "$HOME/.config/nvim"
         echo -e "${CGR}Neovim configuration applied successfully!${CNC}"
@@ -82,20 +104,16 @@ clone_neovim_config() {
         log_error "Neovim configuration folder not found in the repository!"
         exit 1
     fi
-
-    # Clean temporary files
     rm -rf "$temp_dir"
 }
 
 # Install Neovim plugins
 install_neovim_plugins() {
     echo -e "${CYE}Installing Neovim plugins...${CNC}"
-
     if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
         log_error "Neovim configuration file not found!"
         exit 1
     fi
-
     nvim --headless +PackerSync +qall
     echo -e "${CGR}Neovim plugins successfully installed!${CNC}"
 }
@@ -104,6 +122,8 @@ install_neovim_plugins() {
 welcome_message
 confirm_installation
 install_neovim
+install_nerd_fonts
+configure_terminal_fonts
 backup_existing_config
 clone_neovim_config
 install_neovim_plugins
