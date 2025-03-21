@@ -21,22 +21,17 @@ log_error() {
 
 # Exibir arte ASCII de boas-vindas
 welcome_message() {
+    clear
     echo -e "${CGR}"
-    echo " __   __  _______   ______   ____    ____  __  .___  ___. "
-    echo "|  \ |  | |   ____| /  __  \  \   \  /   / |  | |   \/   | "
-    echo "|   \|  | |  |__   |  |  |  |  \   \/   /  |  | |  \  /  | "
-    echo "|  . `  | |   __|  |  |  |  |   \      /   |  | |  |\/|  | "
-    echo "|  |\   | |  |____ |  `--'  |    \    /    |  | |  |  |  | "
-    echo "|__| \__| |_______| \______/      \__/     |__| |__|  |__| "
     echo "========================================================="
-    echo "  🚀 Bem-vindo ao Setup do Neovim!  "
+    echo "  🚀 Bem-vindo ao Setup!  "
     echo "========================================================="
     echo -e "${CNC}"
 }
 
 # Ask for confirmation before installing
 confirm_installation() {
-    read -p "Do you want to install Neovim and the custom configurations? (Y/n): " choice
+    read -p "Do you want to install and configure everything? (Y/n): " choice
     case "$choice" in
         [Nn]* ) 
             echo -e "${CRE}Installation canceled.${CNC}"
@@ -50,7 +45,7 @@ confirm_installation() {
 
 # Install Neovim and required dependencies
 install_neovim() {
-    echo -e "${CYE}Installing Neovim and dependencies...${CNC}"
+    echo -e "${CYE}Installing dependencies...${CNC}"
     
     sudo apt update -y
     sudo apt install -y neovim git curl ripgrep fd-find unzip
@@ -60,7 +55,7 @@ install_neovim() {
         exit 1
     fi
 
-    echo -e "${CGR}Neovim successfully installed!${CNC}"
+    echo -e "${CGR}Dependencies installed successfully!${CNC}"
 }
 
 # Install Nerd Fonts
@@ -81,41 +76,42 @@ configure_terminal_fonts() {
     echo -e "[font]\nnormal = { family = \"JetBrainsMono Nerd Font\" }" > "$HOME/.config/alacritty/alacritty.yml"
 }
 
-# Backup existing Neovim configuration
+# Backup existing configuration
 backup_existing_config() {
     if [ -d "$HOME/.config/nvim" ]; then
-        echo -e "${CYE}Backing up existing Neovim configuration...${CNC}"
+        echo -e "${CYE}Backing up existing configuration...${CNC}"
         mv "$HOME/.config/nvim" "$backup_folder-$(date +%Y%m%d-%H%M%S)"
         echo -e "${CGR}Backup saved to $backup_folder${CNC}"
     fi
 }
 
-# Clone the custom Neovim configuration
+# Clone the custom configuration
 clone_neovim_config() {
-    echo -e "${CYE}Downloading Neovim configuration from repository...${CNC}"
+    echo -e "${CYE}Downloading configuration from repository...${CNC}"
     git clone --depth=1 "$repo_url" "$temp_dir" || {
         log_error "Failed to clone repository files!"
         exit 1
     }
     if [ -d "$temp_dir" ]; then
         mv "$temp_dir" "$HOME/.config/nvim"
-        echo -e "${CGR}Neovim configuration applied successfully!${CNC}"
+        echo -e "${CGR}Configuration applied successfully!${CNC}"
     else
-        log_error "Neovim configuration folder not found in the repository!"
+        log_error "Configuration folder not found in the repository!"
         exit 1
     fi
     rm -rf "$temp_dir"
 }
 
-# Install Neovim plugins
+# Install plugins and run Lazy sync
 install_neovim_plugins() {
-    echo -e "${CYE}Installing Neovim plugins...${CNC}"
+    echo -e "${CYE}Installing plugins...${CNC}"
     if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
-        log_error "Neovim configuration file not found!"
+        log_error "Configuration file not found!"
         exit 1
     fi
     nvim --headless +PackerSync +qall
-    echo -e "${CGR}Neovim plugins successfully installed!${CNC}"
+    nvim --headless -c "Lazy sync" -c "qall"
+    echo -e "${CGR}Plugins successfully installed and synced!${CNC}"
 }
 
 # Run the script
@@ -128,4 +124,4 @@ backup_existing_config
 clone_neovim_config
 install_neovim_plugins
 
-echo -e "${CGR}Neovim setup completed successfully!${CNC}"
+echo -e "${CGR}Setup completed successfully!${CNC}"
