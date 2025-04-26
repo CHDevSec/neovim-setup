@@ -1,6 +1,6 @@
 return {
   {
-    "https://github.com/AvanteAI/avante.nvim",
+    "paulosz/avante.nvim",
     config = function()
       require("avante").setup({
         provider = "openai",
