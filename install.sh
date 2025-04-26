@@ -1,97 +1,69 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -e
 
-# Cores para os logs
-CRE=$(tput setaf 1)
-CYE=$(tput setaf 3)
-CGR=$(tput setaf 2)
-CNC=$(tput sgr0)
+echo "============================"
+echo "      Instalação Neovim      "
+echo "============================"
 
-welcome_message() {
-    clear
-    echo -e "${CGR}"
-    echo "========================================================="
-    echo "             🚀 Bem-vindo $USER! 🚀"
-    echo "========================================================="
-    echo -e "${CNC}"
-    echo "Este script irá configurar seu Neovim completo!"
-    echo
-}
+# Atualiza o sistema
+sudo apt update && sudo apt install -y neovim git curl ripgrep fd-find nodejs npm python3 python3-pip
 
-confirm_installation() {
-    read -rp "Deseja continuar? (s/n): " choice
-    [[ ${choice,,} != "s" ]] && echo -e "${CRE}Instalação cancelada.${CNC}" && exit 1
-}
+# Instala o Lazy.nvim se não existir
+if [ ! -d "$HOME/.local/share/nvim/site/pack/lazy/start/lazy.nvim" ]; then
+    echo "Instalando Lazy.nvim..."
+    git clone https://github.com/folke/lazy.nvim.git ~/.local/share/nvim/site/pack/lazy/start/lazy.nvim
+fi
 
-install_dependencies() {
-    echo -e "${CYE}Instalando dependências...${CNC}"
-    sudo apt update -y
-    sudo apt install -y curl git unzip ripgrep fd-find python3-pip nodejs npm
-    echo -e "${CGR}Dependências instaladas com sucesso!${CNC}"
-}
+# Cria estrutura de pastas se necessário
+mkdir -p ~/.config/nvim/lua
 
-install_neovim() {
-    echo -e "${CYE}Instalando Neovim atualizado...${CNC}"
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-    chmod u+x nvim-linux-x86_64.appimage
-    sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
-}
+# Backup da configuração existente
+if [ -d "$HOME/.config/nvim" ]; then
+    echo "Backup das configurações existentes..."
+    cp -r ~/.config/nvim ~/.config/nvim.backup.$(date +%s)
+fi
 
-clone_config() {
-    echo -e "${CYE}Clonando configuração personalizada...${CNC}"
-    git clone https://github.com/CHDevSec/neovim-setup.git ~/nvim_temp
-    rm -rf ~/.config/nvim
-    mv ~/nvim_temp ~/.config/nvim
-    echo -e "${CGR}Configuração aplicada com sucesso!${CNC}"
-}
+# Copia seu setup (assumindo que você organiza dentro da pasta ./nvim)
+echo "Copiando configurações personalizadas..."
+cp -r ./nvim/* ~/.config/nvim/
 
-install_plugins() {
-    echo -e "${CYE}Instalando plugins...${CNC}"
-    nvim --headless -c "Lazy sync" -c "qall"
-    echo -e "${CGR}Plugins sincronizados com sucesso!${CNC}"
-}
+# Pergunta sobre instalação do Avante
+read -p "Deseja instalar o suporte à IA (Avante)? (s/n): " INSTALL_AVANTE
 
-install_avante_integration() {
-    read -rp "${CYE}Deseja instalar suporte à IA (Avante)? (s/n): ${CNC}" INSTALL_AVANTE
-    if [[ "${INSTALL_AVANTE,,}" == "s" || "${INSTALL_AVANTE,,}" == "yes" ]]; then
-        echo -e "${CYE}Integrando Avante ao Neovim com OpenAI GPT-4o...${CNC}"
-        mkdir -p ~/.config/nvim/lua/plugins
-        cat <<EOF > ~/.config/nvim/lua/plugins/avante.lua
-return {
-  {
-    "yetone/avante.nvim",
-    config = function()
-      require("avante").setup({
-        provider = "openai",
-        openai = {
-          api_key = os.getenv("OPENAI_API_KEY"),
-          model = "gpt-4o",
-        }
-      })
-    end
-  }
-}
-EOF
-        nvim --headless -c "Lazy sync" -c "qall"
-        echo -e "${CGR}Avante com GPT-4o integrado com sucesso!${CNC}"
-        echo -e "${CYE}Lembre-se de exportar sua chave da OpenAI:${CNC}"
-        echo -e "${CYE}export OPENAI_API_KEY=\"sk-xxxxx...\"${CNC}"
+AVANTE_INSTALLED=false
+
+if [[ "$INSTALL_AVANTE" == "s" || "$INSTALL_AVANTE" == "S" ]]; then
+    echo "Integrando o Avante no seu setup..."
+
+    # Verifica se já existe o plugins.lua
+    if [ -f "$HOME/.config/nvim/lua/plugins.lua" ]; then
+        # Antes de adicionar, verifica se o Avante já não está adicionado para evitar duplicação
+        if ! grep -q "AvanteAI/avante.nvim" "$HOME/.config/nvim/lua/plugins.lua"; then
+            echo "{ 'AvanteAI/avante.nvim' }," >> ~/.config/nvim/lua/plugins.lua
+        fi
     else
-        echo -e "${CYE}Avante não será instalado.${CNC}"
+        # Cria o plugins.lua básico se não existir
+        cat <<EOL > ~/.config/nvim/lua/plugins.lua
+return require('lazy').setup({
+    { 'AvanteAI/avante.nvim' },
+})
+EOL
     fi
-}
 
-# Execução do script
-welcome_message
-confirm_installation
-install_dependencies
-install_neovim
-clone_config
-install_plugins
-install_avante_integration
+    AVANTE_INSTALLED=true
+fi
 
-echo -e "${CGR}"
-echo "========================================================="
-echo "             🚀 Instalação Concluída! 🚀"
-echo "========================================================="
-echo "Neovim configurado com sucesso. Aproveite! 🚀"
-echo -e "${CNC}"
+# Instala plugins automaticamente
+echo "Sincronizando plugins..."
+nvim --headless "+Lazy! sync" +qa
+
+# Se o Avante foi instalado, builda o Avante
+if [ "$AVANTE_INSTALLED" = true ]; then
+    echo "Construindo o Avante (AvanteBuild)..."
+    nvim --headless "+AvanteBuild" +qa
+fi
+
+echo "============================"
+echo "  Instalação finalizada!  "
+echo "  Divirta-se no Neovim!   "
+echo "============================"
