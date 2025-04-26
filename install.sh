@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Neovim Installer - Setup by Caio Henrique (baseado no Ghosts)
+# Neovim Installer - Setup by Caio Henrique
 
 # Color configuration for logs
 CRE=$(tput setaf 1)    # Red
@@ -51,10 +51,10 @@ install_dependencies() {
 
     # Instalar Neovim mais recente via AppImage
     if ! command -v nvim >/dev/null || [[ "$(nvim --version | head -n1 | awk '{print $2}')" < "0.8.0" ]]; then
-        echo -e "${CYE}Instalando Neovim atualizado...${CNC}"
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-        chmod u+x nvim.appimage
-        sudo mv nvim.appimage /usr/local/bin/nvim
+        echo -e "${CYE}Instalando Neovim atualizado via AppImage...${CNC}"
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+        chmod u+x nvim-linux-x86_64.appimage
+        sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
     fi
 
     echo -e "${CGR}Dependências instaladas com sucesso!${CNC}\n"
