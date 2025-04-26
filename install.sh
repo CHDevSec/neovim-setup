@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Cores para os logs
 CRE=$(tput setaf 1)
 CYE=$(tput setaf 3)
 CGR=$(tput setaf 2)
@@ -57,7 +58,7 @@ install_avante_integration() {
         cat <<EOF > ~/.config/nvim/lua/plugins/avante.lua
 return {
   {
-    "AvanteAI/avante.nvim",
+    "yetone/avante.nvim",
     config = function()
       require("avante").setup({
         provider = "openai",
