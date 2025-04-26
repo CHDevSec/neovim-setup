@@ -77,7 +77,11 @@ return {
 EOF
         echo -e "${CYE}Sincronizando plugins do Avante...${CNC}"
         nvim --headless -c "Lazy! sync" -c "qall"
-        echo -e "${CGR}Avante com GPT-4o integrado com sucesso!${CNC}"
+
+        echo -e "${CYE}Construindo templates do Avante (AvanteBuild)...${CNC}"
+        nvim --headless -c "AvanteBuild" -c "qall"
+
+        echo -e "${CGR}Avante com GPT-4o integrado e buildado com sucesso!${CNC}"
         echo
         echo -e "${CYE}⚠️  Lembre-se de exportar sua chave da OpenAI no seu .bashrc ou terminal:${CNC}"
         echo -e "${CYE}export OPENAI_API_KEY=\"sk-xxxxx...\"${CNC}"
