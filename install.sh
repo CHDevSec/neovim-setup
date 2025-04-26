@@ -54,42 +54,6 @@ install_plugins() {
     echo -e "${CGR}Plugins sincronizados com sucesso!${CNC}"
 }
 
-install_avante_integration() {
-    read -rp "${CYE}Deseja instalar suporte à IA (Avante)? (s/n): ${CNC}" INSTALL_AVANTE
-    if [[ "${INSTALL_AVANTE,,}" == "s" ]]; then
-        echo -e "${CYE}Integrando Avante ao Neovim com OpenAI GPT-4o...${CNC}"
-        mkdir -p ~/.config/nvim/lua/plugins
-        cat <<EOF > ~/.config/nvim/lua/plugins/avante.lua
-return {
-  {
-    "yetone/avante.nvim",
-    config = function()
-      require("avante").setup({
-        provider = "openai",
-        openai = {
-          api_key = os.getenv("OPENAI_API_KEY"),
-          model = "gpt-4o",
-        }
-      })
-    end
-  }
-}
-EOF
-        echo -e "${CYE}Sincronizando plugins do Avante...${CNC}"
-        nvim --headless -c "Lazy! sync" -c "qall"
-
-        echo -e "${CYE}Construindo templates do Avante (AvanteBuild)...${CNC}"
-        nvim --headless -c "AvanteBuild" -c "qall"
-
-        echo -e "${CGR}Avante com GPT-4o integrado e buildado com sucesso!${CNC}"
-        echo
-        echo -e "${CYE}⚠️  Lembre-se de exportar sua chave da OpenAI no seu .bashrc ou terminal:${CNC}"
-        echo -e "${CYE}export OPENAI_API_KEY=\"sk-xxxxx...\"${CNC}"
-    else
-        echo -e "${CYE}Avante não será instalado.${CNC}"
-    fi
-}
-
 # Execução do script
 welcome_message
 confirm_installation
@@ -97,7 +61,6 @@ install_dependencies
 install_neovim
 clone_config
 install_plugins
-install_avante_integration
 
 echo -e "${CGR}"
 echo "========================================================="
