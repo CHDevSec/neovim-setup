@@ -1,135 +1,96 @@
 #!/usr/bin/env bash
 
-# Neovim Installer - Setup by Caio Henrique
+CRE=$(tput setaf 1)
+CYE=$(tput setaf 3)
+CGR=$(tput setaf 2)
+CNC=$(tput sgr0)
 
-# Color configuration for logs
-CRE=$(tput setaf 1)    # Red
-CYE=$(tput setaf 3)    # Yellow
-CGR=$(tput setaf 2)    # Green
-CBL=$(tput setaf 4)    # Blue
-CNC=$(tput sgr0)       # Reset colors
-
-# Important paths
-BACKUP_FOLDER="$HOME/.config/nvim_backup"
-ERROR_LOG="$HOME/NeovimInstall.log"
-REPO_URL="https://github.com/CHDevSec/neovim-setup.git"
-TEMP_DIR="$HOME/nvim_temp"
-
-# Função de log de erro
-log_error() {
-    local error_msg="$1"
-    echo "[ERROR] $error_msg" | tee -a "$ERROR_LOG"
-}
-
-# Logo bonito
-logo() {
-    local text="${1:-Neovim Setup}"
-    echo -e "\n${CGR}=========================================================${CNC}"
-    echo -e "${CYE}             🚀 $text 🚀${CNC}"
-    echo -e "${CGR}=========================================================${CNC}\n"
-}
-
-# Welcome screen
-welcome() {
+welcome_message() {
     clear
-    logo "Bem-vindo $USER!"
-    echo -e "${CYE}Este script irá configurar seu Neovim completo!${CNC}"
+    echo -e "${CGR}"
+    echo "========================================================="
+    echo "             🚀 Bem-vindo $USER! 🚀"
+    echo "========================================================="
+    echo -e "${CNC}"
+    echo "Este script irá configurar seu Neovim completo!"
     echo
-    read -rp "${CYE}Deseja continuar? (s/n): ${CNC}" choice
-    case "${choice,,}" in
-        n|no) echo -e "${CRE}Instalação cancelada.${CNC}"; exit 0 ;;
-        y|yes|"") ;;
-        *) echo -e "${CRE}Opção inválida.${CNC}"; exit 1 ;;
-    esac
 }
 
-# Instalação do Neovim atualizado e dependências
+confirm_installation() {
+    read -rp "Deseja continuar? (s/n): " choice
+    [[ ${choice,,} != "s" ]] && echo -e "${CRE}Instalação cancelada.${CNC}" && exit 1
+}
+
 install_dependencies() {
-    echo -e "${CBL}Instalando dependências...${CNC}"
-    sudo apt update
-    sudo apt install -y curl ripgrep fd-find unzip git nodejs npm python3 python3-pip
-
-    # Instalar Neovim mais recente via AppImage
-    if ! command -v nvim >/dev/null || [[ "$(nvim --version | head -n1 | awk '{print $2}')" < "0.8.0" ]]; then
-        echo -e "${CYE}Instalando Neovim atualizado via AppImage...${CNC}"
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-        chmod u+x nvim-linux-x86_64.appimage
-        sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
-    fi
-
-    echo -e "${CGR}Dependências instaladas com sucesso!${CNC}\n"
+    echo -e "${CYE}Instalando dependências...${CNC}"
+    sudo apt update -y
+    sudo apt install -y curl git unzip ripgrep fd-find python3-pip nodejs npm
+    echo -e "${CGR}Dependências instaladas com sucesso!${CNC}"
 }
 
-# Backup da configuração existente
-backup_existing_config() {
-    if [ -d "$HOME/.config/nvim" ]; then
-        echo -e "${CYE}Fazendo backup da configuração existente...${CNC}"
-        mkdir -p "$BACKUP_FOLDER"
-        cp -r "$HOME/.config/nvim" "$BACKUP_FOLDER/nvim_backup_$(date +%Y%m%d-%H%M%S)"
-        rm -rf "$HOME/.config/nvim"
-        echo -e "${CGR}Backup salvo em $BACKUP_FOLDER${CNC}\n"
-    fi
+install_neovim() {
+    echo -e "${CYE}Instalando Neovim atualizado...${CNC}"
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    chmod u+x nvim-linux-x86_64.appimage
+    sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
 }
 
-# Clonar seu repositório
-clone_neovim_config() {
+clone_config() {
     echo -e "${CYE}Clonando configuração personalizada...${CNC}"
-    git clone --depth=1 "$REPO_URL" "$TEMP_DIR" || {
-        log_error "Falha ao clonar repositório!"
-        exit 1
-    }
-
-    mkdir -p "$HOME/.config/"
-    mv "$TEMP_DIR" "$HOME/.config/nvim"
-    rm -rf "$TEMP_DIR"
-
-    echo -e "${CGR}Configuração aplicada com sucesso!${CNC}\n"
+    git clone https://github.com/CHDevSec/neovim-setup.git ~/nvim_temp
+    rm -rf ~/.config/nvim
+    mv ~/nvim_temp ~/.config/nvim
+    echo -e "${CGR}Configuração aplicada com sucesso!${CNC}"
 }
 
-# Instalar plugins (Lazy sync)
-install_neovim_plugins() {
+install_plugins() {
     echo -e "${CYE}Instalando plugins...${CNC}"
-    if [ -f "$HOME/.config/nvim/init.lua" ]; then
-        nvim --headless -c "Lazy sync" -c "qall"
-        echo -e "${CGR}Plugins sincronizados com sucesso!${CNC}\n"
-    else
-        log_error "init.lua não encontrado!"
-        exit 1
-    fi
+    nvim --headless -c "Lazy sync" -c "qall"
+    echo -e "${CGR}Plugins sincronizados com sucesso!${CNC}"
 }
 
-# Instalar Avante (opcional)
 install_avante_integration() {
     read -rp "${CYE}Deseja instalar suporte à IA (Avante)? (s/n): ${CNC}" INSTALL_AVANTE
-
     if [[ "${INSTALL_AVANTE,,}" == "s" || "${INSTALL_AVANTE,,}" == "yes" ]]; then
-        echo -e "${CYE}Integrando Avante ao Neovim...${CNC}"
-
-        mkdir -p "$HOME/.config/nvim/lua/plugins"
-        cat <<EOF > "$HOME/.config/nvim/lua/plugins/avante.lua"
+        echo -e "${CYE}Integrando Avante ao Neovim com OpenAI GPT-4o...${CNC}"
+        mkdir -p ~/.config/nvim/lua/plugins
+        cat <<EOF > ~/.config/nvim/lua/plugins/avante.lua
 return {
-  { "AvanteAI/avante.nvim" }
+  {
+    "AvanteAI/avante.nvim",
+    config = function()
+      require("avante").setup({
+        provider = "openai",
+        openai = {
+          api_key = os.getenv("OPENAI_API_KEY"),
+          model = "gpt-4o",
+        }
+      })
+    end
+  }
 }
 EOF
-
         nvim --headless -c "Lazy sync" -c "qall"
-        echo -e "${CGR}Avante instalado e sincronizado!${CNC}\n"
+        echo -e "${CGR}Avante com GPT-4o integrado com sucesso!${CNC}"
+        echo -e "${CYE}Lembre-se de exportar sua chave da OpenAI:${CNC}"
+        echo -e "${CYE}export OPENAI_API_KEY=\"sk-xxxxx...\"${CNC}"
     else
-        echo -e "${CYE}Avante não será instalado.${CNC}\n"
+        echo -e "${CYE}Avante não será instalado.${CNC}"
     fi
 }
 
-# Execução principal
-main() {
-    welcome
-    install_dependencies
-    backup_existing_config
-    clone_neovim_config
-    install_neovim_plugins
-    install_avante_integration
+# Execução do script
+welcome_message
+confirm_installation
+install_dependencies
+install_neovim
+clone_config
+install_plugins
+install_avante_integration
 
-    logo "Instalação Concluída!"
-    echo -e "${CGR}Neovim configurado com sucesso. Aproveite! 🚀${CNC}\n"
-}
-
-main
+echo -e "${CGR}"
+echo "========================================================="
+echo "             🚀 Instalação Concluída! 🚀"
+echo "========================================================="
+echo "Neovim configurado com sucesso. Aproveite! 🚀"
+echo -e "${CNC}"
