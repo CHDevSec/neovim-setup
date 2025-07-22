@@ -25,6 +25,18 @@ confirm_installation() {
     fi
 }
 
+remove_old_editors() {
+    echo -e "${CYE}Removendo instalações antigas de Vim/Neovim...${CNC}"
+    if command -v apt >/dev/null 2>&1; then
+        sudo apt remove --purge -y vim vim-runtime neovim
+        sudo apt autoremove -y
+    elif command -v pacman >/dev/null 2>&1; then
+        sudo pacman -Rns --noconfirm vim neovim
+    fi
+    rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim ~/.vim ~/.vimrc ~/.local/state/nvim
+    echo -e "${CGR}Antigas instalações removidas com sucesso!${CNC}"
+}
+
 install_dependencies() {
     echo -e "${CYE}Instalando dependências...${CNC}"
     if command -v apt >/dev/null 2>&1; then
@@ -64,6 +76,7 @@ install_plugins() {
 # Execução do script
 welcome_message
 confirm_installation
+remove_old_editors
 install_dependencies
 install_neovim
 clone_config
