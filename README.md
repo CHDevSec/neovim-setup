@@ -107,8 +107,8 @@ Thank you for sharing your amazing configurations! 💻🔥
 
 ## 🛠️ **Requirements**
 Before installing, make sure you have:
-- **A Debian-based system (Ubuntu, Pop!_OS, etc.)**
-- **Git installed** (`sudo apt install git`)
+- **A Debian-based system (Ubuntu, Pop!_OS, etc.) _or_ a Pacman-based system (Arch, CachyOS, etc.)**
+- **Git installed** (`sudo apt install git` _ou_ `sudo pacman -S git`)
 - **Internet connection**
 
 ## 📥 **Installation**
