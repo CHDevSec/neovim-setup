@@ -27,8 +27,15 @@ confirm_installation() {
 
 install_dependencies() {
     echo -e "${CYE}Instalando dependências...${CNC}"
-    sudo apt update -y
-    sudo apt install -y curl git unzip ripgrep fd-find python3-pip nodejs npm
+    if command -v apt >/dev/null 2>&1; then
+        sudo apt update -y
+        sudo apt install -y curl git unzip ripgrep fd-find python3-pip nodejs npm
+    elif command -v pacman >/dev/null 2>&1; then
+        sudo pacman -Sy --noconfirm curl git unzip ripgrep fd python-pip nodejs npm
+    else
+        echo -e "${CRE}Gerenciador de pacotes não suportado. Instale as dependências manualmente.${CNC}"
+        exit 1
+    fi
     echo -e "${CGR}Dependências instaladas com sucesso!${CNC}"
 }
 
